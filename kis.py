@@ -58,8 +58,8 @@ def buyTicker(ACCESS_TOKEN, ticker, amount, price, type="limit"):
     URL = f"{URL_BASE}/{PATH}"
 
     data = {
-        "CANO": ACCOUNT_NUMBER,
-        "ACNT_PRDT_CD": ACCOUNT_PASSWORD,
+        "CANO": ACCOUNT_NUMBER1,
+        "ACNT_PRDT_CD": ACCOUNT_NUMBER2,
         "PDNO": ticker, # 종목
         "ORD_DVSN": "01",
         "ORD_QTY": amount, # 수량
