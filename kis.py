@@ -1,6 +1,16 @@
 import requests
 import json
-from config.user_info import *
+import yaml
+
+with open("config.yaml", encoding="UTF-8") as f:
+    cfg = yaml.load(f, Loader=yaml.FullLoader)
+    
+APP_KEY = cfg["APP_KEY"]
+APP_SECRET = cfg["APP_SECRET"]
+ACCESS_TOKEN = ""
+CANO = cfg["CANO"]
+ACNT_PRDT_CD = cfg["ACNT_PRDT_CD"]
+URL_BASE = cfg["URL_BASE"]
 
 # 모의투자
 URL_BASE = "https://openapivts.koreainvestment.com:29443"
@@ -58,8 +68,8 @@ def buyTicker(ACCESS_TOKEN, ticker, amount, price, type="limit"):
     URL = f"{URL_BASE}/{PATH}"
 
     data = {
-        "CANO": ACCOUNT_NUMBER1,
-        "ACNT_PRDT_CD": ACCOUNT_NUMBER2,
+        "CANO": CANO,
+        "ACNT_PRDT_CD": ACNT_PRDT_CD,
         "PDNO": ticker, # 종목
         "ORD_DVSN": "01",
         "ORD_QTY": amount, # 수량
