@@ -1,7 +1,10 @@
 import requests
 import json
 import yaml
+import datetime
+import time
 
+# config
 with open("config.yaml", encoding="UTF-8") as f:
     cfg = yaml.load(f, Loader=yaml.FullLoader)
     
@@ -11,9 +14,6 @@ ACCESS_TOKEN = ""
 CANO = cfg["CANO"]
 ACNT_PRDT_CD = cfg["ACNT_PRDT_CD"]
 URL_BASE = cfg["URL_BASE"]
-
-# 모의투자
-URL_BASE = "https://openapivts.koreainvestment.com:29443"
 
 def accessToken():
     PATH = "oauth2/tokenP"
