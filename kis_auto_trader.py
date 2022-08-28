@@ -55,6 +55,33 @@ def get_hashkey(datas):
     
     return hashkey
 
+# 주식잔고 조회
+def get_balance():
+    PATH = "/uapi/domestic-stock/v1/trading/inquire-balance"
+    URL = f"{URL_BASE}/{PATH}"
+    headers = {
+        "content-type": "application/json",
+        "authorization": f"Bearer {ACCESS_TOKEN}",
+        "appkey": APP_KEY,
+        "appsecret": APP_SECRET,
+        "tr_id": "VTTC8434R", # 모의투자, 실전투자(TTTC8434R)
+        "custtype": "P"
+    }
+    params = {
+        "CANO": CANO,
+        "ACNT_PRDT_CD": ACNT_PRDT_CD,
+        "AFHR_FLPR_YN": "N",
+        "INQR_DVSN": "02",
+        "UNPR_DVSN": "01",
+        "FUND_STTL_ICLD_YN": "N",
+        "FNCG_AMT_AUTO_RDPT_YN": "N",
+        "PRCS_DVSN": "01",
+        "CTX_AREA_FK100": "",
+        "CTX_AREA_NK100": ""
+    }
+    res = requests.get(URL, headers=headers, params=params)
+    return res.json()
+
 # 현재가 조회
 def get_current_price(ACCESS_TOKEN, ticker):
     PATH = "uapi/domestic-stock/v1/quotations/inquire-price"
