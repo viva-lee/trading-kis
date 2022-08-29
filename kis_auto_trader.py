@@ -56,7 +56,7 @@ def get_hashkey(datas):
     return hashkey
 
 # 주식잔고 조회
-def get_balance():
+def get_stock_balance():
     PATH = "/uapi/domestic-stock/v1/trading/inquire-balance"
     URL = f"{URL_BASE}/{PATH}"
     headers = {
@@ -81,6 +81,31 @@ def get_balance():
     }
     res = requests.get(URL, headers=headers, params=params)
     return res.json()
+
+# 현금잔고 조회
+def get_cash_balance(ticker, current_price):
+    PATH = "uapi/domestic-stock/v1/trading/inquire-psbl-order"
+    URL = f"{URL_BASE}/{PATH}"
+    headers = {
+        "content-type": "application/json",
+        "authorization": f"Bearer {ACCESS_TOKEN}",
+        "appkey": APP_KEY,
+        "appsecret": APP_SECRET,
+        "tr_id": "VTTC8908R"
+    }
+    params = {
+        "CANO": CANO,
+        "ACNT_PRDT_CD": ACNT_PRDT_CD,
+        "PDNO": ticker,
+        "ORD_UNPR": current_price,
+        "ORD_DVSN": "01", # 시장가
+        "CMA_EVLU_AMT_ICLD_YN": "N",
+        "OVRS_ICLD_YN": "N"
+    }
+    res = requests.get(URL, headers=headers, params=params)
+    cash = res.json()["output"]["ord_psbl_cash"]
+    send_message(f"현금잔고: {cash} 원")
+    return int(cash)
 
 # 현재가 조회
 def get_current_price(ACCESS_TOKEN, ticker):
