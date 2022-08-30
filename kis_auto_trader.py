@@ -1,3 +1,4 @@
+from winreg import EnumValue
 import requests
 import json
 import yaml
@@ -80,6 +81,10 @@ def get_stock_balance():
         "CTX_AREA_NK100": ""
     }
     res = requests.get(URL, headers=headers, params=params)
+    evaluation = res.json()['output2']
+    send_message(f"주식 평가 금액: {evaluation[0]["scts_evlu_amt"]}")
+    send_message(f"평가 손익: {evaluation[0]["evlu_pfls_smtl_amt"]}")
+    send_message(f"총 평가 금액: {evaluation[0]["tot_evlu_amt"]}")
     return res.json()
 
 # 현금잔고 조회
